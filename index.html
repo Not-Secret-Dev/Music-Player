@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Music Player</title>
+  </head>
+  <body>
+    <button id="mode-toggle" style="position: absolute; right: 30px; top: 30px">
+      🌙
+    </button>
+    <div class="music-player">
+      <div class="now-playing">
+        <h2 id="track-title">Track title</h2>
+        <p id="track-artist">Artist name</p>
+      </div>
+      <div class="controls">
+        <button class="btn" id="prev">Previous</button>
+        <button class="btn" id="play">Play</button>
+        <button class="btn" id="pause" style="display: none">Pause</button>
+        <button class="btn" id="next">Next</button>
+        <button class="btn" id="shuffle">Shuffle</button>
+        <button class="btn" id="repeat">Repeat</button>
+      </div>
+      <div class="progress-container">
+        <input type="range" id="progress-bar" value="0" min="0" max="100" />
+      </div>
+      <div class="playlist">
+        <ul id="playlist"></ul>
+      </div>
+    </div>
+    <script>
+      const modeToggle = document.getElementById("mode-toggle");
+      const body = document.body;
+      const musicPlayer = document.querySelector(".music-player");
+
+      modeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        musicPlayer.classList.toggle("dark-mode");
+
+        // Toggle the icon between moon and sun
+        if (body.classList.contains("dark-mode")) {
+          modeToggle.textContent = "🌞"; // Sun icon for light mode
+        } else {
+          modeToggle.textContent = "🌙"; // Moon icon for dark mode
+        }
+      });
+
+      // Optional: Persist the mode preference in localStorage
+      const currentMode = localStorage.getItem("theme");
+      if (currentMode) {
+        body.classList.add(currentMode);
+        musicPlayer.classList.add(currentMode);
+        modeToggle.textContent = currentMode === "dark-mode" ? "🌞" : "🌙";
+      }
+
+      modeToggle.addEventListener("click", () => {
+        const newMode = body.classList.contains("dark-mode") ? "dark-mode" : "";
+        localStorage.setItem("theme", newMode);
+      });
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
